@@ -39,8 +39,36 @@ img {
 	text-align: center;
 }
 
-.center {
-	text-align: -webkit-center;
+/* CARD CSS */
+
+.card {
+	width: fit-content;
+	background-color: #ffffff;
+	border-radius: 0.6rem;
+	padding: 1.5rem;
+	line-height: 2rem;
+	box-shadow: 0px -1px 12px 3px rgb(0 0 0 / 10%);
+	margin: 0 auto;
+}
+
+.card-img {
+	width: 80%;
+}
+
+.card-title {
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+
+.card-title-lg {
+	font-size: 1.4rem;
+	font-weight: 700;
+}
+
+.card-body {
+	font-size: 1rem;
+	font-weight: 400;
+	padding-bottom: 0.5rem;
 }
 
 /* BUTTON */
@@ -57,13 +85,39 @@ img {
 	background: #1e1e1e;
 }
 
-/* RESPONSIVE DEVICE */
-@media screen and (max-width: 980px) {
-	.row {
-		display: block;
-	}
-
-	.col-md--6 {
-		width: 100%;
-	}
+/* HOME SECTION CSS START */
+.home {
+	background-color: #e0cabc;
+	height: 100vh;
 }
+
+.title {
+	font-size: 2.2rem;
+	font-weight: 400;
+	margin-bottom: 1rem;
+}
+/* HOME SECTION CSS END */
+
+/* MCQ SECTION CSS START */
+.mcq {
+	background-color: #b0b8ff;
+	height: 100vh;
+}
+/* MCQ SECTION CSS END */
+
+/* RESULT SECTION CSS START */
+.result {
+	background-color: #ffdf64;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+}
+/* RESULT SECTION CSS END */
+
+/* TIME OUT SECTION CSS START */
+.time-out {
+	background-color: #ff646d;
+	height: 100vh;
+}
+/* TIME OUT SECTION CSS END */

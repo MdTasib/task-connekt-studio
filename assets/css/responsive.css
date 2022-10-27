@@ -1,0 +1,10 @@
+/* RESPONSIVE DEVICE */
+@media screen and (max-width: 980px) {
+	.row {
+		display: block;
+	}
+
+	.col-md--6 {
+		width: 100%;
+	}
+}
