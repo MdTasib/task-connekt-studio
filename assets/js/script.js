@@ -20,7 +20,6 @@ const timeOutButton = document.getElementById("time-out-btn");
  */
 
 timer.innerHTML = 10 + ":" + 00;
-startTimer();
 
 // START TIMER FUNCTION
 function startTimer() {
@@ -28,6 +27,12 @@ function startTimer() {
 	let timeArray = presentTime.split(/[:]+/);
 	let m = timeArray[0];
 	let s = checkSecond(timeArray[1] - 1);
+
+	if (m == 0 && s == 00) {
+		mcqContainer.style.display = "none";
+		timeOutContainer.style.display = "block";
+		resultContainer.style.display = "none";
+	}
 
 	if (s == 59) {
 		m = m - 1;
@@ -38,6 +43,7 @@ function startTimer() {
 	}
 
 	timer.innerHTML = m + ":" + s;
+
 	setTimeout(startTimer, 1000);
 }
 
@@ -90,8 +96,77 @@ const quizData = [
 		},
 		correctAnswer: "c",
 	},
+	{
+		question: "Which sentence is present perfect continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I am eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "d",
+	},
+	{
+		question: "Which sentence is past continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I was eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "b",
+	},
+	{
+		question: "Which sentence is past perfect tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I was eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "c",
+	},
+	{
+		question: "Which sentence is past perfect continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I was eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "d",
+	},
+	{
+		question: "Which sentence is future continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I will be eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "b",
+	},
+	{
+		question: "Which sentence is future perfect tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I will be eating rice",
+			c: "I will have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "c",
+	},
+	{
+		question: "Which sentence is future perfect continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I will be eating rice",
+			c: "I will have eaten rice",
+			d: "I will have been eating rice for 1 year",
+		},
+		correctAnswer: "d",
+	},
 ];
-
 generateQuiz(quizData, quizContainer, resultsEl, submitButton);
 
 function generateQuiz(
@@ -183,14 +258,21 @@ function generateQuiz(
 	};
 }
 
+//	REFRESH PAGE
+function refreshPage() {
+	window.location.reload();
+}
+
 /**
  *
  * UI UPDATE WITH BUTTON CLICK
  *
  */
+
 startButton.addEventListener("click", () => {
 	mcqContainer.style.display = "block";
 	homeContainer.style.display = "none";
+	startTimer();
 });
 
 submitButton.addEventListener("click", () => {
@@ -199,6 +281,9 @@ submitButton.addEventListener("click", () => {
 });
 
 resultButton.addEventListener("click", () => {
-	resultContainer.style.display = "none";
-	timeOutContainer.style.display = "block";
+	refreshPage();
+});
+
+timeOutButton.addEventListener("click", () => {
+	refreshPage();
 });
