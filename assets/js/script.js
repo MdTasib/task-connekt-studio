@@ -1,9 +1,9 @@
 // SELECT ELEMENT
 const quizContainer = document.getElementById("quiz");
-const mcqContainer = document.getElementById("mcq");
-const homeContainer = document.getElementById("home");
-const resultContainer = document.getElementById("result");
-const timeOutContainer = document.getElementById("time-out");
+const mcqContainer = document.querySelector(".mcq");
+const homeContainer = document.querySelector(".home");
+const resultContainer = document.querySelector(".result");
+const timeOutContainer = document.querySelector(".time-out");
 const resultsEl = document.getElementById("results");
 const timer = document.getElementById("timer");
 
@@ -182,3 +182,23 @@ function generateQuiz(
 		showResults(questions, quizContainer, resultsContainer);
 	};
 }
+
+/**
+ *
+ * UI UPDATE WITH BUTTON CLICK
+ *
+ */
+startButton.addEventListener("click", () => {
+	mcqContainer.style.display = "block";
+	homeContainer.style.display = "none";
+});
+
+submitButton.addEventListener("click", () => {
+	mcqContainer.style.display = "none";
+	resultContainer.style.display = "block";
+});
+
+resultButton.addEventListener("click", () => {
+	resultContainer.style.display = "none";
+	timeOutContainer.style.display = "block";
+});
