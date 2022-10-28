@@ -15,51 +15,6 @@ const timeOutButton = document.getElementById("time-out-btn");
 
 /**
  *
- * COUNTDOWN TIMER FUNCTIONALITY
- *
- */
-
-timer.innerHTML = 10 + ":" + 00;
-
-// START TIMER FUNCTION
-function startTimer() {
-	let presentTime = timer.innerHTML;
-	let timeArray = presentTime.split(/[:]+/);
-	let m = timeArray[0];
-	let s = checkSecond(timeArray[1] - 1);
-
-	if (m == 0 && s == 00) {
-		mcqContainer.style.display = "none";
-		timeOutContainer.style.display = "block";
-		resultContainer.style.display = "none";
-	}
-
-	if (s == 59) {
-		m = m - 1;
-	}
-
-	if (m < 0) {
-		return;
-	}
-
-	timer.innerHTML = m + ":" + s;
-
-	setTimeout(startTimer, 1000);
-}
-
-// CHECK SECOND
-function checkSecond(sec) {
-	if (sec < 10 && sec >= 0) {
-		sec = "0" + sec;
-	} // add zero in front of numbers < 10
-	if (sec < 0) {
-		sec = "59";
-	}
-	return sec;
-}
-
-/**
- *
  * QUIZ FUNCTIONALITY
  *
  */
@@ -169,23 +124,25 @@ const quizData = [
 ];
 generateQuiz(quizData, quizContainer, resultsEl, submitButton);
 
+// GENERATE QUIZ
 function generateQuiz(
 	questions,
 	quizContainer,
 	resultsContainer,
 	submitButton
 ) {
+	// SHOW QUIZ QUESTIONS
 	function showQuestions(questions, quizContainer) {
-		// we'll need a place to store the output and the answer choices
+		// WE'LL NEED A PLACE TO STORE THE OUTPUT AND THE ANSWER CHOICES
 		const output = [];
 		let answers;
 
-		// for each question...
+		// FOR EACH QUESTION...
 		for (let i = 0; i < questions.length; i++) {
-			// first reset the list of answers
+			// FIRST RESET THE LIST OF ANSWERS
 			answers = [];
 
-			// for each available answer...
+			// FOR EACH AVAILABLE ANSWER...
 			for (letter in questions[i].answers) {
 				answers.push(`
 						<li>
@@ -197,7 +154,7 @@ function generateQuiz(
 				`);
 			}
 
-			// add this question and its answers to the output
+			// ADD THIS QUESTION AND ITS ANSWERS TO THE OUTPUT
 			output.push(
 				`
 				<div class="mcq-card">
@@ -208,51 +165,51 @@ function generateQuiz(
 			);
 		}
 
-		// finally combine our output list into one string of html and put it on the page
+		// FINALLY COMBINE OUT OUTPUT LIST INTO ONE STRING OF HTML AND PUT IN ON THE PAGE
 		quizContainer.innerHTML = output.join("");
 	}
 
 	// SHOW RESULTS
 	function showResults(questions, quizContainer, resultsContainer) {
-		// gather answer containers from our quiz
+		// GATHER ANSWER CONTAINERS FROM OUT QUIZ
 		let answerContainers = quizContainer.querySelectorAll(".answers");
 
-		// keep track of user's answers
+		// KEEP TRACK OF USER'S ANSWERS
 		let userAnswer = "";
 		let numCorrect = 0;
 
-		// for each question...
+		// FOR EACH QUESTIONS...
 		for (let i = 0; i < questions.length; i++) {
-			// find selected answer
+			// FIND SELECTED ANSWER
 			userAnswer = (
 				answerContainers[i].querySelector(
 					"input[name=question" + i + "]:checked"
 				) || {}
 			).value;
 
-			// if answer is correct
+			// IF ANSWER IS CORRECT
 			if (userAnswer === questions[i].correctAnswer) {
-				// add to the number of correct answers
+				// ADD TO THE NUMBER OF CORRECT ANSWERS
 				numCorrect++;
 
-				// color the answers green
+				// COLOR THE ANSWERS GREEN
 				answerContainers[i].style.color = "lightgreen";
 			}
-			// if answer is wrong or blank
+			// IF ANSWER IS WRON OR BLACK
 			else {
-				// color the answers red
+				// COLOR THE ANSWERS RED
 				answerContainers[i].style.color = "red";
 			}
 		}
 
-		// show number of correct answers out of total
+		// SHOW NUMBER OF CORRECT ANSWERS OUT OF TOTAL
 		resultsContainer.innerHTML = numCorrect;
 	}
 
-	// show questions right away
+	// SHOW QUESTIONS RIGHT AWAY
 	showQuestions(questions, quizContainer);
 
-	// on submit, show results
+	// ON SUBMIT, SHOW RESULTS
 	submitButton.onclick = function () {
 		showResults(questions, quizContainer, resultsContainer);
 	};
@@ -261,6 +218,52 @@ function generateQuiz(
 //	REFRESH PAGE
 function refreshPage() {
 	window.location.reload();
+}
+
+/**
+ *
+ * COUNTDOWN TIMER FUNCTIONALITY
+ *
+ */
+
+timer.innerHTML = 10 + ":" + 00;
+
+// START TIMER FUNCTION
+function startTimer() {
+	let presentTime = timer.innerHTML;
+	let timeArray = presentTime.split(/[:]+/);
+	let m = timeArray[0];
+	let s = checkSecond(timeArray[1] - 1);
+
+	// UPDATE UI
+	if (m == 0 && s == 00) {
+		mcqContainer.style.display = "none";
+		timeOutContainer.style.display = "block";
+		resultContainer.style.display = "none";
+	}
+
+	if (s == 59) {
+		m = m - 1;
+	}
+
+	if (m < 0) {
+		return;
+	}
+
+	timer.innerHTML = m + ":" + s;
+
+	setTimeout(startTimer, 1000);
+}
+
+// CHECK SECOND
+function checkSecond(sec) {
+	if (sec < 10 && sec >= 0) {
+		sec = "0" + sec;
+	} // add zero in front of numbers < 10
+	if (sec < 0) {
+		sec = "59";
+	}
+	return sec;
 }
 
 /**
