@@ -11,3 +11,5 @@ Only HTML, CSS, and vanilla JavaScript were used to create this project.
 - Once the user clicks the Finish button, they should be forwarded to the Result page. On the Result page, there will be scores that the user has achieved.
 
 - If the user times out then they will automatically be forwarded to the Timeout page.
+
+## `PREVIEW :`[https://chipper-strudel-dc153d.netlify.app](https://chipper-strudel-dc153d.netlify.app)
