@@ -1,8 +1,28 @@
+// SELECT ELEMENT
+const quizContainer = document.getElementById("quiz");
+const mcqContainer = document.getElementById("mcq");
+const homeContainer = document.getElementById("home");
+const resultContainer = document.getElementById("result");
+const timeOutContainer = document.getElementById("time-out");
+const resultsEl = document.getElementById("results");
 const timer = document.getElementById("timer");
+
+// SELECT BUTTON
+const submitButton = document.getElementById("submit");
+const startButton = document.getElementById("start-btn");
+const resultButton = document.getElementById("result-btn");
+const timeOutButton = document.getElementById("time-out-btn");
+
+/**
+ *
+ * COUNTDOWN TIMER FUNCTIONALITY
+ *
+ */
 
 timer.innerHTML = 10 + ":" + 00;
 startTimer();
 
+// START TIMER FUNCTION
 function startTimer() {
 	let presentTime = timer.innerHTML;
 	let timeArray = presentTime.split(/[:]+/);
@@ -21,6 +41,7 @@ function startTimer() {
 	setTimeout(startTimer, 1000);
 }
 
+// CHECK SECOND
 function checkSecond(sec) {
 	if (sec < 10 && sec >= 0) {
 		sec = "0" + sec;
@@ -33,97 +54,131 @@ function checkSecond(sec) {
 
 /**
  *
- * quiz
+ * QUIZ FUNCTIONALITY
  *
  */
 
+// QUIZ DATA
 const quizData = [
 	{
-		question: "Which language runs in a web browser?",
-		a: "Java",
-		b: "C",
-		c: "Python",
-		d: "javascript",
-		correct: "d",
+		question: "What is the past form of 'eat'?",
+		answers: {
+			a: "eat",
+			b: "ate",
+			c: "eaten",
+			d: "have ate",
+		},
+		correctAnswer: "b",
 	},
 	{
-		question: "What does CSS stand for?",
-		a: "Central Style Sheets",
-		b: "Cascading Style Sheets",
-		c: "Cascading Simple Sheets",
-		d: "Cars SUVs Sailboats",
-		correct: "b",
+		question: "Which sentence is present continuous tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I am eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "b",
 	},
 	{
-		question: "What does HTML stand for?",
-		a: "Hypertext Markup Language",
-		b: "Hypertext Markdown Language",
-		c: "Hyperloop Machine Language",
-		d: "Helicopters Terminals Motorboats Lamborginis",
-		correct: "a",
-	},
-	{
-		question: "What year was JavaScript launched?",
-		a: "1996",
-		b: "1995",
-		c: "1994",
-		d: "none of the above",
-		correct: "b",
+		question: "Which sentence is present perfect tense?",
+		answers: {
+			a: "I eat rice",
+			b: "I am eating rice",
+			c: "I have eaten rice",
+			d: "I have been eating rice for 1 year",
+		},
+		correctAnswer: "c",
 	},
 ];
 
-const quiz = document.getElementById("quiz");
-const answerEls = document.querySelectorAll(".answer");
-const questionEl = document.getElementById("question");
-const a_text = document.getElementById("a_text");
-const b_text = document.getElementById("b_text");
-const c_text = document.getElementById("c_text");
-const d_text = document.getElementById("d_text");
-const submitBtn = document.getElementById("submit");
+generateQuiz(quizData, quizContainer, resultsEl, submitButton);
 
-let currentQuiz = 0;
-let score = 0;
+function generateQuiz(
+	questions,
+	quizContainer,
+	resultsContainer,
+	submitButton
+) {
+	function showQuestions(questions, quizContainer) {
+		// we'll need a place to store the output and the answer choices
+		const output = [];
+		let answers;
 
-loadQuiz();
+		// for each question...
+		for (let i = 0; i < questions.length; i++) {
+			// first reset the list of answers
+			answers = [];
 
-function loadQuiz() {
-	deselectAnswers();
-	const currentQuizData = quizData[currentQuiz];
-	questionEl.innerText = currentQuizData.question;
-	a_text.innerText = currentQuizData.a;
-	b_text.innerText = currentQuizData.b;
-	c_text.innerText = currentQuizData.c;
-	d_text.innerText = currentQuizData.d;
-}
+			// for each available answer...
+			for (letter in questions[i].answers) {
+				answers.push(`
+						<li>
+							<label>
+              	<input type="radio" name="question${i}" value="${letter}">
+              	${questions[i].answers[letter]}
+							</label>
+            </li>
+				`);
+			}
 
-function deselectAnswers() {
-	answerEls.forEach(answerEl => (answerEl.checked = false));
-}
-
-function getSelected() {
-	let answer;
-	answerEls.forEach(answerEl => {
-		if (answerEl.checked) {
-			answer = answerEl.id;
+			// add this question and its answers to the output
+			output.push(
+				`
+				<div class="mcq-card">
+					<h4 class="question">${i + 1}. ${questions[i].question}</h4>
+					<ul class="answers">${answers.join("")}</ul>
+					</div>
+				`
+			);
 		}
-	});
-	return answer;
-}
 
-submitBtn.addEventListener("click", () => {
-	const answer = getSelected();
-	if (answer) {
-		if (answer === quizData[currentQuiz].correct) {
-			score++;
-		}
-		currentQuiz++;
-		if (currentQuiz < quizData.length) {
-			loadQuiz();
-		} else {
-			quiz.innerHTML = `
-				 <h2>You answered ${score}/${quizData.length} questions correctly</h2>
-				 <button onclick="location.reload()">Reload</button>
-				 `;
-		}
+		// finally combine our output list into one string of html and put it on the page
+		quizContainer.innerHTML = output.join("");
 	}
-});
+
+	// SHOW RESULTS
+	function showResults(questions, quizContainer, resultsContainer) {
+		// gather answer containers from our quiz
+		let answerContainers = quizContainer.querySelectorAll(".answers");
+
+		// keep track of user's answers
+		let userAnswer = "";
+		let numCorrect = 0;
+
+		// for each question...
+		for (let i = 0; i < questions.length; i++) {
+			// find selected answer
+			userAnswer = (
+				answerContainers[i].querySelector(
+					"input[name=question" + i + "]:checked"
+				) || {}
+			).value;
+
+			// if answer is correct
+			if (userAnswer === questions[i].correctAnswer) {
+				// add to the number of correct answers
+				numCorrect++;
+
+				// color the answers green
+				answerContainers[i].style.color = "lightgreen";
+			}
+			// if answer is wrong or blank
+			else {
+				// color the answers red
+				answerContainers[i].style.color = "red";
+			}
+		}
+
+		// show number of correct answers out of total
+		resultsContainer.innerHTML = numCorrect;
+	}
+
+	// show questions right away
+	showQuestions(questions, quizContainer);
+
+	// on submit, show results
+	submitButton.onclick = function () {
+		showResults(questions, quizContainer, resultsContainer);
+	};
+}

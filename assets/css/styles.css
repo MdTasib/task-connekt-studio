@@ -109,7 +109,7 @@ img {
 /* MCQ SECTION CSS START */
 .mcq {
 	background-color: #b0b8ff;
-	height: 100vh;
+	/* height: 100vh; */
 	padding: 2rem 0rem;
 }
 
