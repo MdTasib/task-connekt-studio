@@ -22,8 +22,16 @@ img {
 	justify-content: space-between;
 }
 
+.col-md--4 {
+	flex-basis: 32%;
+}
+
 .col-md--6 {
 	flex-basis: 48%;
+}
+
+.col-md--8 {
+	flex-basis: 64%;
 }
 
 .align-center {
@@ -102,7 +110,31 @@ img {
 .mcq {
 	background-color: #b0b8ff;
 	height: 100vh;
+	padding: 2rem 0rem;
 }
+
+.mcq-card {
+	background-color: #ffffff;
+	border-radius: 0.6rem;
+	padding: 1.5rem;
+	line-height: 2rem;
+	box-shadow: 0px -1px 12px 3px rgb(0 0 0 / 10%);
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 1rem;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul li {
+	font-size: 1rem;
+}
+ul li label {
+	cursor: pointer;
+}
+
 /* MCQ SECTION CSS END */
 
 /* RESULT SECTION CSS START */
